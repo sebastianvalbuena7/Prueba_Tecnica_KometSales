@@ -60,7 +60,7 @@ public class FlowerController {
         Optional<Flower> flowerFound = Flower.getFlowers().stream().filter(flower1 -> flower1.getId().equals(id)).findFirst();
         if(flowerFound.isPresent()) {
             flowerService.deleteFlower(id);
-            Flower.flowers.remove(flowerFound.get());
+            Flower.getFlowers().remove(flowerFound.get());
         }
         return "Flower eliminated";
     }
