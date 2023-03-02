@@ -6,8 +6,6 @@ import com.kometsalesprueba.Inventario.de.Flores.services.FlowerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class FlowerServiceImpl implements FlowerService {
     @Autowired
@@ -21,10 +19,5 @@ public class FlowerServiceImpl implements FlowerService {
     @Override
     public void deleteFlower(Long id) {
         flowerRepository.deleteById(id);
-    }
-
-    @Override
-    public List<Flower> findByName(String name) {
-        return flowerRepository.findByName(name);
     }
 }

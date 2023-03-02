@@ -24,11 +24,17 @@ public class FlowerController {
 
     @GetMapping("/getFlowers")
     public List<Map<String, Object>> getFlowers() {
-        Flower.flowers.forEach(flower ->  flower.setName(flower.getName() + "-kometsales"));
-        Flower.flowers.sort(Comparator.comparing(Flower::getName).reversed());
+        List<Flower> flowers = new ArrayList<>(Flower.getFlowers());
+        flowers.forEach(flower -> {
+            if(!flower.getName().contains("-kometsales")) {
+                flower.setName(flower.getName().concat("-kometsales"));
+            }
+        });
+
+        flowers.sort(Comparator.comparing(Flower::getName).reversed());
 
         List<Map<String, Object>> result = new ArrayList<>();
-        Flower.flowers.forEach(flower -> {
+        flowers.forEach(flower -> {
             Map<String, Object> map = new HashMap<>();
             map.put("name", flower.getName());
             map.put("price", flower.getPrice());
@@ -40,7 +46,13 @@ public class FlowerController {
 
     @GetMapping("/getFlowersPrice")
     public List<Flower> getFlowersPrice() {
-        return Flower.getFlowers().stream().filter(flor -> flor.getPrice() > 20).collect(Collectors.toList());
+        return Flower.getFlowers().stream().map(flower -> {
+            if(flower.getName().contains("-kometsales")) {
+                String[] nameParts = flower.getName().split("-");
+                flower.setName(nameParts[0]);
+            }
+            return flower;
+        }).filter(flor -> flor.getPrice() > 20).collect(Collectors.toList());
     }
 
     @DeleteMapping("/deleteFlower/{id}")
@@ -55,6 +67,12 @@ public class FlowerController {
 
     @GetMapping("/getFlowersName")
     public List<Flower> getFlowersName(@RequestParam String name) {
-        return flowerService.findByName(name);
+        return Flower.getFlowers().stream().map(flower -> {
+            if (flower.getName().contains("-kometsales")) {
+                String[] nameParts = flower.getName().split("-");
+                flower.setName(nameParts[0]);
+            }
+            return flower;
+        }).filter(flower -> flower.getName().equals(name)).collect(Collectors.toList());
     }
 }

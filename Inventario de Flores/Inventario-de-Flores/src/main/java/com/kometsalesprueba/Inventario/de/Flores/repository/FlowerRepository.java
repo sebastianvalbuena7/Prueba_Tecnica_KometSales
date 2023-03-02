@@ -8,5 +8,4 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface FlowerRepository extends JpaRepository<Flower, Long> {
-    List<Flower> findByName(String name);
 }

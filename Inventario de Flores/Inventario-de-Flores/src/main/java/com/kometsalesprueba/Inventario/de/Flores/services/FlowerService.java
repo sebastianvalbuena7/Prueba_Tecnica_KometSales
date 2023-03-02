@@ -7,5 +7,4 @@ import java.util.List;
 public interface FlowerService {
     void saveFlower(Flower flower);
     void deleteFlower(Long id);
-    List<Flower> findByName(String name);
 }

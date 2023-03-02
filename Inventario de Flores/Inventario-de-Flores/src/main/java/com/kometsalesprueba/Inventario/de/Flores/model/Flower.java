@@ -17,7 +17,6 @@ public class Flower {
     private Long id;
     private String name;
     private Double price;
-
     public static List<Flower> flowers = new ArrayList<>();
 
     public Flower() {}
